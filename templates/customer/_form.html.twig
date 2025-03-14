@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+    let element = document.getElementById('customer_phone');
+    const maskOptions = {
+        mask: '+7(000)000-00-00',
+        lazy: false
+    };
+
+    const mask = new IMask(element, maskOptions);
+</script>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Изменение информации о клиенте{% endblock %}
+
+{% block body %}
+    <h1>Изменить информацию о клиенте</h1>
+
+    {{ include('customer/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_customer_index') }}">Вернуться к списку</a>
+
+    {{ include('customer/_delete_form.html.twig') }}
+{% endblock %}

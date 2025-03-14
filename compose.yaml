@@ -1,0 +1,43 @@
+
+services:
+  php:
+    container_name: '${PROJECT_NAME}_php'
+    image: php:8.4-fpm
+    volumes:
+      - '.:/srv'
+      - './docker/php/conf.d/www.conf:/etc/php-fpm.d/www.conf'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    build:
+      context: .
+    depends_on:
+      - mariadb
+  nginx:
+    container_name: '${PROJECT_NAME}_nginx'
+    image: 'nginx'
+    volumes:
+      - '.:/srv'
+      - './public/bundles:/usr/share/nginx/html/bundles'
+      - './docker/nginx/conf.d:/etc/nginx/conf.d'
+    ports:
+      - "0.0.0.0:80:80"
+    depends_on:
+      - php
+  mariadb:
+    container_name: '${PROJECT_NAME}_mariadb'
+    image: 'mariadb'
+    volumes:
+      - 'mariadb-data:/var/lib/mysql'
+    restart: always
+    environment:
+      MYSQL_USER: cs
+      MYSQL_PASSWORD: cs
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cs
+    ports:
+      - "0.0.0.0:3306:3306"
+networks:
+  default:
+    name: customerScoring.local
+volumes:
+  mariadb-data: null

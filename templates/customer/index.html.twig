@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Клиенты{% endblock %}
+
+{% block body %}
+    <h1>Клиенты</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Идентифкатор</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Телефон</th>
+                <th>Почта</th>
+                <th>Образование</th>
+                <th>Разрешение ОПДн</th>
+                <th>Подсчёт</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.surname }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.Education }}</td>
+                <td>{{ customer.pdProcessingPermission ? '+' : '-' }}</td>
+                <td>{{ customer.score }}</td>
+                <td>
+                    <a href="{{ path('app_customer_show', {'id': customer.id}) }}">Показать</a>
+                    <a href="{{ path('app_customer_edit', {'id': customer.id}) }}">Изменить</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Нет записей</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_customer_new') }}">Создать</a>
+
+    {% if customers|length %}
+        <div class="row align-items-center justify-content-between mb-4">
+            <div class="col col-auto">
+                На странице {{ customers|length }} из {{ customers.totalItemCount }} {{ customers.totalItemCount == 1 ? 'записи' : 'записей' }}
+            </div>
+            <div class="col col-auto pagination-wrap-mb-0">
+                {{ knp_pagination_render(customers) }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
