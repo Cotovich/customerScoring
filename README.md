@@ -6,10 +6,11 @@
 * `docker-compose build`
 * `docker-compose up -d`
 * `docker-compose exec php bash`
+* `composer install`
 * `bin/console doctrine:migration:migrate`
 
 Создание клиента: `/customer/new`\
-Список клиентов: `/customer`
+Список клиентов: `/` или `/customer`
 
 ## Тесты
 * `docker-compose exec php bash`
